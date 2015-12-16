@@ -1,7 +1,7 @@
 # This should be sourced by your zsh shell
 
 if [[ ."$PSPKG_ROOT" == . ]]; then
-    set PSPKG_ROOT='/reg/common/package'
+    set PSPKG_ROOT='/reg/g/pcds/pkg_mgr'
 fi
 export PSPKG_ROOT
 

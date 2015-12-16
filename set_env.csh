@@ -1,9 +1,9 @@
 # This should be sourced by your csh/tcsh shell
 
 if (! $?PSPKG_ROOT) then
-    setenv PSPKG_ROOT /reg/common/package
+    setenv PSPKG_ROOT /reg/g/pcds/pkg_mgr
 elsif (."$PSPKG_ROOT" == .) then
-    setenv PSPKG_ROOT /reg/common/package
+    setenv PSPKG_ROOT /reg/g/pcds/pkg_mgr
 endif
 
 source ${PSPKG_ROOT}/etc/pspkg_clean.csh

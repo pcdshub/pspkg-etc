@@ -1,7 +1,7 @@
 # This should be sourced by your bash or bourne shell
 
 if [ ."$PSPKG_ROOT" == . ]; then
-    PSPKG_ROOT='/reg/common/package'
+    PSPKG_ROOT='/reg/g/pcds/pkg_mgr'
 fi
 
 IFS_ORIG="$IFS"
