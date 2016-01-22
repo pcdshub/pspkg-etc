@@ -16,6 +16,11 @@ export PSPKG_BUILD=`${PSPKG_ROOT}/etc/pspkg_build.sh`
 export PSPKG_ARCH="${PSPKG_PROC}-${PSPKG_OS}-${PSPKG_COMP}-${PSPKG_BUILD}"
 export PSPKG_RELDIR="${PSPKG_ROOT}/release/${PSPKG_RELEASE}/${PSPKG_ARCH}"
 
+if [ ! -d $PSPKG_RELDIR ]; then
+	echo PSPKG Error: Release $PSPKG_RELDIR not found!
+	return 1
+fi
+
 export PATH="${PSPKG_RELDIR}/bin:${PATH}"
 export LD_LIBRARY_PATH="${PSPKG_RELDIR}/lib:${LD_LIBRARY_PATH}"
 if [ X${EXTRA_LD_LIBS} != X ] ; then
