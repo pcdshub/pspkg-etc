@@ -1,4 +1,5 @@
 # This should be sourced by your bash or bourne shell
+# to remove any prior PSPKG_RELEASE from your env paths
 
 if [ ."$PSPKG_ROOT" == . ]; then
     PSPKG_ROOT='/reg/g/pcds/pkg_mgr'
