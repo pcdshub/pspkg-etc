@@ -63,16 +63,20 @@ export PSPKG_BUILD=`${PSPKG_ROOT}/etc/pspkg_build.sh`
 export PSPKG_ARCH="${PSPKG_PROC}-${PSPKG_OS}-${PSPKG_COMP}-${PSPKG_BUILD}"
 export PSPKG_RELDIR="${PSPKG_ROOT}/release/${PSPKG_RELEASE}/${PSPKG_ARCH}"
 
-# Check for release directory
+# Check for release/package directory
 if [ ! -d $PSPKG_RELDIR ]; then
-	echo PSPKG Error: Release $PSPKG_RELDIR not found!
+	echo PSPKG Error: Package $PSPKG_RELDIR not found!
 	return 1
 fi
 
 source $PSPKG_ROOT/etc/pathmunge.sh
 
-# Add the release to PATH
-pathmunge ${PSPKG_RELDIR}/python-bin
+# Doesn't look like this is needed as long as python and each of
+# the packages dependents have already been added to your env
+# # Add the release's python bin to the path
+# pathmunge ${PSPKG_RELDIR}/python-bin
+
+# Add the release/package to PATH
 pathmunge ${PSPKG_RELDIR}/bin
 
 # Add the release to LD_LIBRARY_PATH
@@ -82,7 +86,9 @@ if [ X${EXTRA_LD_LIBS} != X ] ; then
     export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:${EXTRA_LD_LIBS}"
 fi
 
+# # Add the release's python site-packages dir to the path
+# pythonpathmunge ${PSPKG_RELDIR}/python-site-packages
+
 # Add the release to PYTHONPATH
-pythonpathmunge ${PSPKG_RELDIR}/python-site-packages
 pythonpathmunge ${PSPKG_RELDIR}/python
 
