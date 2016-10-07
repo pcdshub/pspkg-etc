@@ -7,8 +7,12 @@ export PSPKG_ROOT
 
 # PSPKG_RELEASE no longer defaults to everything
 if [ -z "$PSPKG_RELEASE" ]; then
-	echo PSPKG Error: Please specify release by setting PSPKG_RELEASE=PKG_NAME/VERS
-	return 1
+	if [ $# -eq 1 ]; then
+		export PSPKG_RELEASE=$1
+	else
+		echo PSPKG Error: Please specify release by setting PSPKG_RELEASE=PKG_NAME/VERS
+		return 1
+	fi
 fi
 
 # Remove any prior PSPKG release from env paths
