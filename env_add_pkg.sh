@@ -1,4 +1,22 @@
-# This should be sourced by your sh/bash shell
+# This script can be sourced by your sh/bash shell startup, or later, in three ways
+#
+#	1. Use w/o  an argument to just define bash function env_add_pkg()
+#		Example:
+#			source $PSPKG_ROOT/etc/env_add_pkg.sh
+#
+#	2. Use with an argument to add that package/version to your environment
+#		Example:
+#			source $PSPKG_ROOT/etc/env_add_pkg.sh git-utils-0.3.0
+#			source $PSPKG_ROOT/etc/env_add_pkg.sh ipython/0.13.1
+#			source $PSPKG_ROOT/etc/env_add_pkg.sh hdfview/2.9
+#		If you find yourself using this too much, you may get conflicts.
+#		To resolve, build a release in $PSPKG_ROOT/source/releases w/ compatible package versions.
+#
+#	3. Once you've sourced the script at least once, use the convenient bash function env_add_pkg
+#		Example:
+#			source $PSPKG_ROOT/etc/env_add_pkg.sh git-utils-0.3.0
+#			env_add_pkg ipython/0.13.1
+#			env_add_pkg hdfview/2.9
 
 if [ ."$PSPKG_ROOT" == . ]; then
 	if [ -d /reg/g/pcds/pkg_mgr ]; then
@@ -35,21 +53,23 @@ function env_add_pkg()
 		env_add_pkg_usage
 		return 1
 	fi
-	export PSPKG_RELEASE=$1
-	source $PSPKG_ROOT/etc/env_add_pkg.sh
+	source $PSPKG_ROOT/etc/env_add_pkg.sh $1
 }
 export ENV_ADD_PKG_DEFINED=1
 
+# Allow setting PSPKG_RELEASE via cmd line
+if [ $# -eq 1 ]; then
+	echo Setting PSPKG_RELEASE=$1
+	export PSPKG_RELEASE=$1
+fi
+
 # PSPKG_RELEASE must be specified
 if [ -z "$PSPKG_RELEASE" ]; then
-	if [ $# -eq 1 ]; then
-		export PSPKG_RELEASE=$1
-	fi
-fi
-if [ -z "$PSPKG_RELEASE" ]; then
 	if [ "$ENV_ADD_PKG_FIRST_TIME" == 1 ]; then
+		# Allow reading this script from .bash_profile to define env_add_pkg()
 		return 0
 	fi
+	# Throw a usage msg for any additional usage w/o PSPKG_RELEASE
 	env_add_pkg_usage
 	return 1
 fi
@@ -69,6 +89,7 @@ if [ ! -d $PSPKG_RELDIR ]; then
 	return 1
 fi
 
+echo Adding $PSPKG_RELEASE to your shell environment...
 source $PSPKG_ROOT/etc/pathmunge.sh
 
 # Doesn't look like this is needed as long as python and each of
