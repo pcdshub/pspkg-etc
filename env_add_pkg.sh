@@ -107,9 +107,11 @@ if [ X${EXTRA_LD_LIBS} != X ] ; then
     export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:${EXTRA_LD_LIBS}"
 fi
 
-# # Add the release's python site-packages dir to the path
-# pythonpathmunge ${PSPKG_RELDIR}/python-site-packages
-
 # Add the release to PYTHONPATH
-pythonpathmunge ${PSPKG_RELDIR}/python
+if [ -d ${PSPKG_RELDIR}/python-site-packages ]; then
+	pythonpathmunge ${PSPKG_RELDIR}/python-site-packages
+fi
+if [ -d ${PSPKG_RELDIR}/lib/*/site-packages ]; then
+	pythonpathmunge ${PSPKG_RELDIR}/lib/*/site-packages
+fi
 
