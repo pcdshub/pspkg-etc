@@ -28,7 +28,7 @@ export PSPKG_ARCH="${PSPKG_PROC}-${PSPKG_OS}-${PSPKG_COMP}-${PSPKG_BUILD}"
 export PSPKG_RELDIR="${PSPKG_ROOT}/release/${PSPKG_RELEASE}/${PSPKG_ARCH}"
 
 # Check for release directory
-if [ ! -d $PSPKG_RELDIR ]; then
+if [ ! -d "$PSPKG_RELDIR" ]; then
 	echo PSPKG Error: Release $PSPKG_RELDIR not found!
 	return 1
 fi
