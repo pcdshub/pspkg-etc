@@ -13,6 +13,7 @@ if [ "$kernel" = "Linux" -a -r /etc/redhat-release ] ; then
 	CentOS_release_5.*)                       os=rhel5 ;;
 	CentOS_release_6.*)                       os=rhel6 ;;
 	CentOS_release_7.*)                       os=rhel7 ;;
+	CentOS_Linux_release_7.*)                 os=rhel7 ;;
 	Scientific_Linux_*_release_5.*)           os=rhel5 ;;
 	Scientific_Linux_*_release_6.*)           os=rhel6 ;;
 	Scientific_Linux_*_release_7.*)           os=rhel7 ;;
@@ -31,6 +32,11 @@ elif [ "$kernel" = "Linux" -a -r /etc/lsb-release ] ; then
 	os=`echo ubu${DISTRIB_RELEASE} | cut -d. -f1`
     elif [ "$DISTRIB_ID" = "LinuxMint" ] ; then
 	os=`echo mint${DISTRIB_RELEASE} | cut -d. -f1`
+    fi
+elif [ "$kernel" = "Linux" -a -r /etc/os-release ] ; then
+    . /etc/os-release
+    if [ "$NAME" = "Angstrom" ] ; then
+	os=`echo ang_${VERSION_ID} | cut -d. -f1`
     fi
 elif [ "$kernel" = "Linux" -a `ls -l /bin/ls | awk '{print $NF;}'` = busybox ] ; then
 #    os=linuxRT
